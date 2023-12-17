@@ -19,12 +19,14 @@ public class CustomerController : ControllerBase
         return await _customerRep.Filter(c => true);
     }
 
+    [HttpPost]
+    [EnableCors("MainPolicy")]
     public async Task<ActionResult> RegisterLegalEntity(
         [FromServices] ICustomerRepository _customerRep,
         [FromBody] NewCustomerLegalEntityDTO customerData
     )
     {
-        if(await _customerRep.ExistingEmail(customerData.Email) || await _customerRep.ExistingCpfCnpj(customerData.CpfCnpj))
+        if (await _customerRep.ExistingEmail(customerData.Email) || await _customerRep.ExistingCpfCnpj(customerData.CpfCnpj))
             return BadRequest("Email already registered");
 
         Customer c = new()
@@ -36,7 +38,7 @@ public class CustomerController : ControllerBase
             PersonType = customerData.PersonType,
             CpfCnpj = customerData.CpfCnpj,
             StateRegistration = customerData.StateRegistration,
-            LastUpdate = DateTime.Now
+            LastUpdate = DateTime.Now,
         };
 
         await _customerRep.Add(c);

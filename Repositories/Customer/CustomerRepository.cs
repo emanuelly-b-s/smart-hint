@@ -15,11 +15,8 @@ public class CustomerRepository : ICustomerRepository
     private readonly SmarthintContext ctx;
     private readonly ICustomerRepository _customerRepository;
 
-    public CustomerRepository(SmarthintContext ctx, ICustomerRepository customerRepository)
-    {
-        this.ctx = ctx;
-        this._customerRepository = customerRepository;
-    }
+    public CustomerRepository(SmarthintContext ctx)
+        => this.ctx = ctx;
 
     public async Task Add(Customer obj)
     {
@@ -36,7 +33,7 @@ public class CustomerRepository : ICustomerRepository
         => await ctx.Customers
             .AnyAsync(c => c.CpfCnpj == cpfCnpj);
 
-    public async Task<bool> ExistingEmail(string email) 
+    public async Task<bool> ExistingEmail(string email)
         => await ctx.Customers
             .AnyAsync(c => c.Email == email);
 
