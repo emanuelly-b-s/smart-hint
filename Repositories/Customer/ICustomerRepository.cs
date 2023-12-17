@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using smart_hint.Model;
-using smart_hint.Repositories;
+using smarthint.Model;
+using smarthint.Repositories;
 
-namespace smart_hint.Repositories.CustomerRepository;
+namespace smarthint.Repositories.CustomerRepository;
 public interface ICustomerRepository : IRepository<Customer>
 {
-
+    Task<bool> ExistingEmail(string email);
+    Task<bool> ExistingCpfCnpj(string cpfCnpj);
+    
 }
 

@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace smart_hint.Repositories;
+namespace smarthint.Repositories;
 public interface IRepository<T>
 {
     Task Add(T obj);

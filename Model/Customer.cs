@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace smart_hint.Model;
+namespace smarthint.Model;
 
 public partial class Customer
 {
