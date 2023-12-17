@@ -1,11 +1,11 @@
 USE teste_smart_hint;
 
-CREATE TABLE buyers (
+CREATE TABLE customer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name_company_name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     phone VARCHAR(20),
-    registration_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    registered_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     blocked BOOLEAN NOT NULL DEFAULT FALSE,
     person_type ENUM('Individual', 'Legal Entity') NOT NULL,
     cpf_cnpj VARCHAR(20),

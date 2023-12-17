@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace smart_hint.Model;
 
-public partial class Buyer
+public partial class Customer
 {
     public int Id { get; set; }
 
@@ -13,7 +13,7 @@ public partial class Buyer
 
     public string? Phone { get; set; }
 
-    public DateTime RegistrationDate { get; set; }
+    public DateTime RegisteredAt { get; set; }
 
     public bool Blocked { get; set; }
 

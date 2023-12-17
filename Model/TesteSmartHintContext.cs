@@ -15,10 +15,10 @@ public partial class TesteSmartHintContext : DbContext
     {
     }
 
-    public virtual DbSet<Buyer> Buyers { get; set; }
+    public virtual DbSet<Customer> Customers { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySql("server=127.0.0.1;uid=root;pwd=32787513Ma!;database=teste_smart_hint", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.2.0-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,11 +27,11 @@ public partial class TesteSmartHintContext : DbContext
             .UseCollation("utf8mb4_0900_ai_ci")
             .HasCharSet("utf8mb4");
 
-        modelBuilder.Entity<Buyer>(entity =>
+        modelBuilder.Entity<Customer>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PRIMARY");
 
-            entity.ToTable("buyers");
+            entity.ToTable("customers");
 
             entity.HasIndex(e => e.CpfCnpj, "cpf_cnpj").IsUnique();
 
@@ -63,10 +63,10 @@ public partial class TesteSmartHintContext : DbContext
             entity.Property(e => e.Phone)
                 .HasMaxLength(20)
                 .HasColumnName("phone");
-            entity.Property(e => e.RegistrationDate)
+            entity.Property(e => e.RegisteredAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
-                .HasColumnName("registration_date");
+                .HasColumnName("registered_at");
             entity.Property(e => e.StateRegistration)
                 .HasMaxLength(20)
                 .HasColumnName("state_registration");
