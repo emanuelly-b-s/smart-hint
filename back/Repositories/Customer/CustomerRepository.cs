@@ -37,9 +37,10 @@ public class CustomerRepository : ICustomerRepository
         => await ctx.Customers
             .AnyAsync(c => c.Email == email);
 
-    public Task<List<Customer>> Filter(Expression<Func<Customer, bool>> condition)
+    public async Task<List<Customer>> Filter(Expression<Func<Customer, bool>> condition)
     {
-        throw new NotImplementedException();
+        var query = ctx.Customers.Where(condition);
+        return await query.ToListAsync();
     }
 
     public async Task Update(Customer obj)
