@@ -40,7 +40,20 @@ public class CustomerRepository : ICustomerRepository
     public async Task<List<Customer>> Filter(Expression<Func<Customer, bool>> condition)
     {
         var query = ctx.Customers.Where(condition);
+
         return await query.ToListAsync();
+    }
+
+    public async Task<(List<Customer>, int)> GetCustomers(int pageNumber, int pageSize)
+    {
+        var totalRecords = await ctx.Customers.CountAsync();
+
+        var customers = await ctx.Customers
+                                 .Skip((pageNumber - 1) * pageSize)
+                                 .Take(pageSize)
+                                 .ToListAsync();
+
+        return (customers, totalRecords);
     }
 
     public async Task Update(Customer obj)

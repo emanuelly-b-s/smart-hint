@@ -12,10 +12,16 @@ import styles from '../styles/CustomerGrid.module.scss';
 
 
 const CustomersListPage = () => {
-  const { customers, isLoading, error } = useAllCustomers();
-  const [currentPage, setCurrentPage] = useState(1);
+  const { customers, isLoading, error, totalPages, currentPage, setCurrentPage } = useAllCustomers();
   const [showFilter, setShowFilter] = useState(false);
 
+  const handlePageChange = (newPage) => {
+    console.log(`Current Page 1in CustomersListPage: ${currentPage}`, 'totalPages', totalPages);
+
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
 
   const handleFilter = (filters) => {
   };
@@ -49,7 +55,7 @@ const CustomersListPage = () => {
         </Col>
       </Row>
       <CustomerGrid customers={customers} />
-      <Pagination currentPage={currentPage} onPageChange={setCurrentPage} />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </Container>
   );
 };

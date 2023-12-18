@@ -10,6 +10,7 @@ public interface ICustomerRepository : IRepository<Customer>
 {
     Task<bool> ExistingEmail(string email);
     Task<bool> ExistingCpfCnpj(string cpfCnpj);
+    Task<(List<Customer>, int)> GetCustomers(int pageNumber, int pageSize);
     
 }
 

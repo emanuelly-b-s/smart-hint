@@ -18,3 +18,13 @@ CREATE TABLE customer (
     UNIQUE (phone)
 );
 
+
+CREATE TABLE settings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    setting_key VARCHAR(255) NOT NULL,
+    setting_value VARCHAR(255) NOT NULL,
+    UNIQUE (setting_key)
+);
+
+INSERT INTO settings (setting_key, setting_value  ) VALUES 
+('individuals_state_registration', 'false');

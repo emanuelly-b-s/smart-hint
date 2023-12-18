@@ -10,7 +10,6 @@ const formatDate = (dateString) => {
 };
 
 
-
 const CustomerGrid = ({ customers }) => {
   return (
     <Container className={styles.customerGrid}>
@@ -24,6 +23,7 @@ const CustomerGrid = ({ customers }) => {
         <Col className={`${styles.col1} ${styles.colDescription}`}>Bloqueado</Col>
         <Col className={`${styles.col2} ${styles.colDescription}`}>Ações</Col>
       </Row>
+  
       {customers.map((customer, index) => (
         <Row
           className={`${styles.row} ${index % 2 === 0 ? styles.rowColor : styles.rowColor2}`}

@@ -11,12 +11,20 @@ using smarthint.Repositories.CustomerRepository;
 [Route("customer")]
 public class CustomerController : ControllerBase
 {
+
     [HttpGet]
     [EnableCors("MainPolicy")]
     public async Task<ActionResult<List<Customer>>> GetAll(
-        [FromServices] ICustomerRepository _customerRep)
+        [FromServices] ICustomerRepository _customerRep,
+        int page = 1, int pageSize = 20)
     {
-        return await _customerRep.Filter(c => true);
+
+        if (page <= 0 || pageSize <= 0)
+            return BadRequest("Invalid page or pageSize parameters");
+
+        var (customers, totalRecords) = await _customerRep.GetCustomers(page, pageSize);
+
+        return Ok(new { data = customers, total = totalRecords, page, pageSize });
     }
 
     [HttpPost]

@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/esm/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 
+
 const FilterArea = ({ onFilter, onClear }) => {
 
     const [filters, setFilters] = useState({
@@ -30,39 +31,39 @@ const FilterArea = ({ onFilter, onClear }) => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <input
+            <Form.Control
                 type="text"
                 name="name"
                 placeholder="Nome ou Razão Social do Cliente"
                 value={filters.name}
                 onChange={handleChange}
             />
-            <input
+            <Form.Control
                 type="email"
                 name="email"
                 placeholder="E-mail do Cliente"
                 value={filters.email}
                 onChange={handleChange}
             />
-            <input
+            <Form.Control
                 type="tel"
                 name="phone"
                 placeholder="Telefone do Cliente"
                 value={filters.phone}
                 onChange={handleChange}
             />
-            <input
+            <Form.Control
                 type="date"
                 name="registeredAt"
                 placeholder="Selecione uma data ou período"
                 value={filters.registeredAt}
                 onChange={handleChange}
             />
-            <select name="isBlocked" value={filters.isBlocked} onChange={handleChange}>
+            <Form.Select name="isBlocked" value={filters.isBlocked} onChange={handleChange}>
                 <option value="">Cliente bloqueado?</option>
                 <option value="yes">Sim</option>
                 <option value="no">Não</option>
-            </select>
+            </Form.Select>
 
             <Button variant="outline-primary" onClick={handleClear}>Limpar filtros</Button>
             <Button variant="outline-primary" type="submit">Filtrar</Button>
