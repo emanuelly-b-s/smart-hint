@@ -2,17 +2,65 @@
 .customerGrid {
     width: 100%;
     border-collapse: collapse;
+    border: black 1px solid;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 1em;
 
-    th {
-        background-color: #f4f4f4;
-        text-align: left;
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
+
+    .row {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        border-bottom: 0.5px solid #c1bdbd;
     }
 
-    td {
-        padding: 8px;
-        border-bottom: 1px solid #ddd;
+    .descriptionWrapper {
+        margin-bottom: 1em;
+    }
+
+    .description{
+        display: flex;
+        margin-bottom: 1em !important;
+        
+        .descriptionText {
+            font-size: 1.05rem;            
+        } 
+    }
+    
+    .descriptionColumns {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-direction: row;
+        height: 3em;
+        overflow: hidden;
+        padding: 0;
+        margin: 0;
+        border-bottom: 0.5px solid #c1bdbd;
+    }
+
+    .col1 {
+        background-color: rgb(230, 230, 230);
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        height: 3em;
+
+    }
+
+    .col2 {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        height: 3em;
     }
 
     input[type="checkbox"] {
