@@ -1,4 +1,4 @@
-USE teste_smart_hint;
+USE smarthint;
 
 CREATE TABLE customer (
     id INT AUTO_INCREMENT PRIMARY KEY,

@@ -14,17 +14,20 @@ const formatDate = (dateString) => {
 const CustomerGrid = ({ customers }) => {
   return (
     <Container className={styles.customerGrid}>
+      
       <Row className={styles.descriptionColumns}>
-        <Col className={styles.col2}><input type="checkbox" /></Col>
-        <Col className={styles.col1}>Nome/Razão Social</Col>
-        <Col className={styles.col2}>E-mail</Col>
-        <Col className={styles.col1}>Telefone</Col>
-        <Col className={styles.col2}>Data de Cadastro</Col>
-        <Col className={styles.col1}>Bloqueado</Col>
-        <Col className={styles.col2}>Ações</Col>
+        <Col className={`${styles.col2}`}><input type="checkbox" /></Col>
+        <Col className={`${styles.col1} ${styles.colDescription}`}>Nome/Razão Social</Col>
+        <Col className={`${styles.col2} ${styles.colDescription}`}>E-mail</Col>
+        <Col className={`${styles.col1} ${styles.colDescription}`}>Telefone</Col>
+        <Col className={`${styles.col2} ${styles.colDescription}`}>Data de Cadastro</Col>
+        <Col className={`${styles.col1} ${styles.colDescription}`}>Bloqueado</Col>
+        <Col className={`${styles.col2} ${styles.colDescription}`}>Ações</Col>
       </Row>
-      {customers.map(customer => (
-        <Row className={styles.row} key={customer.id}>
+      {customers.map((customer, index) => (
+        <Row
+          className={`${styles.row} ${index % 2 === 0 ? styles.rowColor : styles.rowColor2}`}
+          key={customer.id}>
           <Col className={styles.col2}><input type="checkbox" /></Col>
           <Col className={styles.col1}>{customer.nameCompanyName}</Col>
           <Col className={styles.col2}>{customer.email}</Col>
