@@ -1,5 +1,7 @@
 USE smarthint;
 
+drop table if exists customer;
+
 CREATE TABLE customer (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name_company_name VARCHAR(255) NOT NULL,
@@ -13,6 +15,8 @@ CREATE TABLE customer (
     gender ENUM('Female', 'Male', 'Other'),
     birth_date DATE,
     last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    passwordCustomer TEXT NOT NULL,
+	saltPassword TEXT NOT NULL,
     UNIQUE (email),
     UNIQUE (cpf_cnpj),
     UNIQUE (phone)

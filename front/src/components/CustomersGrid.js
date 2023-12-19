@@ -33,7 +33,7 @@ const CustomerGrid = ({ customers }) => {
           <Col className={styles.col2}>{customer.email}</Col>
           <Col className={styles.col1}>{customer.phone}</Col>
           <Col className={styles.col2}>{formatDate(customer.registeredAt)}</Col>
-          <Col className={styles.col1}><input type="checkbox" checked={customer.isBlocked} /></Col>
+          <Col className={styles.col1}><input type="checkbox" checked={customer.blocked} /></Col>
           <Col className={styles.col2}><Button>Editar</Button ></Col>
         </Row>
       ))}

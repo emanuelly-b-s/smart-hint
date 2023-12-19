@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using smarthint.Model;
 using smarthint.Repositories;
 using System.Linq.Expressions;
+using smarthint.Services;
 
 namespace smarthint.Repositories.CustomerRepository;
 
@@ -44,6 +45,26 @@ public class CustomerRepository : ICustomerRepository
         return await query.ToListAsync();
     }
 
+    public async Task<(List<Customer>, int)> FilterAndPaginateCustomers(List<Expression<Func<Customer, bool>>> searchConditions,
+                                                                        int pageNumber,
+                                                                        int pageSize)
+    {
+        IQueryable<Customer> query = ctx.Customers;
+
+        foreach (var condition in searchConditions)
+            query = query.ApplyCriteria(condition);
+
+
+        var totalRecords = await query.CountAsync();
+
+        var paginatedCustomers = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (paginatedCustomers, totalRecords);
+    }
+
     public async Task<(List<Customer>, int)> GetCustomers(int pageNumber, int pageSize)
     {
         var totalRecords = await ctx.Customers.CountAsync();
@@ -61,4 +82,6 @@ public class CustomerRepository : ICustomerRepository
         ctx.Customers.Update(obj);
         await ctx.SaveChangesAsync();
     }
+
+
 }

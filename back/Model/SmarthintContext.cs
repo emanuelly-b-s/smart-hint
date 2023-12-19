@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
+using smarthint;
 
 namespace smarthint.Model;
 
@@ -18,8 +19,10 @@ public partial class SmarthintContext : DbContext
 
     public virtual DbSet<Customer> Customers { get; set; }
 
+    public virtual DbSet<Setting> Settings { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySql("server=127.0.0.1;uid=root;pwd=32787513Ma!;database=smarthint", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.2.0-mysql"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -58,6 +61,9 @@ public partial class SmarthintContext : DbContext
             entity.Property(e => e.NameCompanyName)
                 .HasMaxLength(255)
                 .HasColumnName("name_company_name");
+            entity.Property(e => e.PasswordCustomer)
+                .HasColumnType("text")
+                .HasColumnName("passwordCustomer");
             entity.Property(e => e.PersonType)
                 .HasColumnType("enum('Individual','Legal Entity')")
                 .HasColumnName("person_type");
@@ -68,9 +74,27 @@ public partial class SmarthintContext : DbContext
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("datetime")
                 .HasColumnName("registered_at");
+            entity.Property(e => e.SaltPassword)
+                .HasColumnType("text")
+                .HasColumnName("saltPassword");
             entity.Property(e => e.StateRegistration)
                 .HasMaxLength(20)
                 .HasColumnName("state_registration");
+        });
+
+        modelBuilder.Entity<Setting>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PRIMARY");
+
+            entity.ToTable("settings");
+
+            entity.HasIndex(e => e.SettingKey, "setting_key").IsUnique();
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.SettingKey).HasColumnName("setting_key");
+            entity.Property(e => e.SettingValue)
+                .HasMaxLength(255)
+                .HasColumnName("setting_value");
         });
 
         OnModelCreatingPartial(modelBuilder);

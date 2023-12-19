@@ -1,5 +1,7 @@
 using smarthint.Model;
 using smarthint.Repositories.CustomerRepository;
+using SecurityService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddCors(opt =>
 });
 
 builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
+builder.Services.AddTransient<ISecurityServiceJwt, SecurityServiceJwt>();
 builder.Services.AddScoped<SmarthintContext>();
                                                                                 
 // Add services to the container.

@@ -28,4 +28,8 @@ public partial class Customer
     public DateOnly? BirthDate { get; set; }
 
     public DateTime LastUpdate { get; set; }
+
+    public string PasswordCustomer { get; set; } = null!;
+
+    public string SaltPassword { get; set; } = null!;
 }

@@ -10,7 +10,7 @@ public class NewCustomerIndividualDTO
     public required string CpfCnpj { get; set; }
     public string? StateRegistration { get; set; }
     public required string Gender { get; set; }
-
-    public required DateOnly BirthDate { get; set; }    
+    public required DateOnly BirthDate { get; set; }  
+    public required string PasswordCustomer { get; set; }  
 
 }

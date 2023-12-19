@@ -12,7 +12,8 @@ import styles from '../styles/CustomerGrid.module.scss';
 
 
 const CustomersListPage = () => {
-  const { customers, isLoading, error, totalPages, currentPage, setCurrentPage } = useAllCustomers();
+  const [filters, setFilters] = useState({});
+  const { customers, isLoading, error, totalPages, currentPage, setCurrentPage } = useAllCustomers(1, filters);
   const [showFilter, setShowFilter] = useState(false);
 
   const handlePageChange = (newPage) => {
@@ -23,10 +24,14 @@ const CustomersListPage = () => {
     }
   };
 
-  const handleFilter = (filters) => {
+  const handleFilter = (newFilters) => {
+    setFilters(newFilters);
+    setCurrentPage(1);
   };
 
   const handleClearFilters = () => {
+    setFilters({});
+    setCurrentPage(1);
   };
 
   const toggleFilter = () => {

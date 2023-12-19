@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useAllCustomers = (initialPage = 1) => {
+const useAllCustomers = (initialPage = 1, filters = {}) => {
     const [customers, setCustomers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -16,9 +16,14 @@ const useAllCustomers = (initialPage = 1) => {
             setError(null);
 
             try {
-                const response = await axios.get(`http://localhost:5038/customer?page=${currentPage}&pageSize=${pageSize}`);
+
+                const query = new URLSearchParams({ page: currentPage, pageSize, ...filters }).toString();
+
+                const response = await axios.get(`http://localhost:5038/customer?${query}`);
+
                 setCustomers(response.data.data);
                 setTotalPages(Math.ceil(response.data.total / pageSize));
+
             } catch (err) {
                 setError(err);
                 console.log(err);
@@ -28,10 +33,10 @@ const useAllCustomers = (initialPage = 1) => {
         };
 
         fetchCustomers();
-    }, [currentPage]);
+    }, [currentPage, filters]);
 
 
-    return { customers, isLoading, error, totalPages, setCurrentPage, currentPage };
+    return { customers, isLoading, error, totalPages, setCurrentPage, currentPage, filters };
 };
 
 export default useAllCustomers;
