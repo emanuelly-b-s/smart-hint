@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/esm/Button';
-import Form from 'react-bootstrap/Form';
+import Form from 'react-bootstrap/esm/Form';
 import { useState } from 'react';
 
 

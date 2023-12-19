@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Button from 'react-bootstrap/esm/Button';
 
 const CustomerFilter = ({ onApplyFilter, onClearFilter }) => {
   const [filters, setFilters] = useState({
@@ -38,8 +39,8 @@ const CustomerFilter = ({ onApplyFilter, onClearFilter }) => {
         value={filters.email}
         onChange={handleChange}
       />
-      <button onClick={handleApplyFilter}>Aplicar filtros</button>
-      <button onClick={handleClearFilter}>Limpar filtros</button>
+      <Button onClick={handleApplyFilter}>Aplicar filtros</Button>
+      <Button onClick={handleClearFilter}>Limpar filtros</Button>
     </div>
   );
 };

@@ -15,6 +15,8 @@ using SecurityService;
 public class CustomerController : ControllerBase
 {
 
+    private SettingRepositorie _settingRep;
+
     [HttpGet]
     [EnableCors("MainPolicy")]
     public async Task<IActionResult> FilterAndPaginate([FromServices] ICustomerRepository customerRepository,
@@ -44,7 +46,7 @@ public class CustomerController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost]
+    [HttpPost("legal-entity")]
     [EnableCors("MainPolicy")]
     public async Task<ActionResult> RegisterLegalEntity(
         [FromServices] ICustomerRepository _customerRep,
@@ -66,7 +68,7 @@ public class CustomerController : ControllerBase
             Email = customerData.Email,
             Phone = customerData.Phone,
             RegisteredAt = customerData.RegisteredAt,
-            PersonType = customerData.PersonType,
+            PersonType = "Legal Entity",
             CpfCnpj = customerData.CpfCnpj,
             StateRegistration = customerData.StateRegistration,
             LastUpdate = DateTime.Now,
@@ -78,4 +80,51 @@ public class CustomerController : ControllerBase
 
         return Ok();
     }
+
+    [HttpPost("individual")]
+    [EnableCors("MainPolicy")]
+    public async Task<ActionResult> RegisterIndividual(
+        [FromServices] ICustomerRepository _customerRep,
+        [FromBody] NewCustomerIndividualDTO customerData,
+        [FromServices] ISecurityServiceJwt passJwt
+    )
+    {
+        if (await _customerRep.ExistingEmail(customerData.Email) || await _customerRep.ExistingCpfCnpj(customerData.CpfCnpj))
+            return BadRequest("");
+
+        var setting = _settingRep.GetIndividualState("individuals_state_registration");
+
+        if (setting.SettingValue == "true" && customerData.StateRegistration != null)
+        {
+            if (await _customerRep.ExistingStateRegistration(customerData.StateRegistration))
+                return BadRequest("This state registration already exists");
+        }
+
+        var passUserSalt = passJwt.ApplySalt();
+        var passUserHash = passJwt.ApplyHash(customerData.PasswordCustomer, passUserSalt);
+        var passUserHash64 = Convert.ToBase64String(passUserHash);
+
+        Customer c = new()
+        {
+            NameCompanyName = customerData.Name,
+            Email = customerData.Email,
+            Phone = customerData.Phone,
+            RegisteredAt = customerData.RegisteredAt,
+            PersonType = "Individual",
+            CpfCnpj = customerData.CpfCnpj,
+            StateRegistration = customerData.StateRegistration,
+            Gender = customerData.Gender,
+            BirthDate = customerData.BirthDate,
+            LastUpdate = DateTime.Now,
+            PasswordCustomer = passUserHash64,
+            SaltPassword = passUserSalt,
+            Blocked = customerData.Blocked
+        };
+
+        await _customerRep.Add(c);
+
+        return Ok();
+    }
+
 }
+

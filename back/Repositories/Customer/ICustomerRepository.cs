@@ -18,5 +18,6 @@ public interface ICustomerRepository : IRepository<Customer>
                                                            int pageNumber,
                                                            int pageSize);
 
+    Task<bool> ExistingStateRegistration(string stateRegistration);
 }
 

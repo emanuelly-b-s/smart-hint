@@ -38,6 +38,10 @@ public class CustomerRepository : ICustomerRepository
         => await ctx.Customers
             .AnyAsync(c => c.Email == email);
 
+    public async Task<bool> ExistingStateRegistration(string stateRegistration)
+        => await ctx.Customers
+            .AnyAsync(c => c.StateRegistration == stateRegistration);
+
     public async Task<List<Customer>> Filter(Expression<Func<Customer, bool>> condition)
     {
         var query = ctx.Customers.Where(condition);

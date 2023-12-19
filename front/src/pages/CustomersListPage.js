@@ -50,7 +50,7 @@ const CustomersListPage = () => {
           </h6>
         </Col>
         <Col>
-          <Button variant="outline-primary">Adicionar Cliente</Button>
+          <Button variant="outline-primary" href='/cadastro'>Adicionar Cliente</Button>
         </Col>
         <Col>
           <Button variant="outline-primary" onClick={toggleFilter}>Filtrar</Button>
