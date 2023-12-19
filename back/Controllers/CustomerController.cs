@@ -57,6 +57,9 @@ public class CustomerController : ControllerBase
         if (await _customerRep.ExistingEmail(customerData.Email) || await _customerRep.ExistingCpfCnpj(customerData.CpfCnpj))
             return BadRequest("");
 
+        if (await _customerRep.ExistingStateRegistration(customerData.StateRegistration))
+            return BadRequest("This state registration already exists");
+
         var passUserSalt = passJwt.ApplySalt();
         var passUserHash = passJwt.ApplyHash(customerData.PasswordCustomer, passUserSalt);
         var passUserHash64 = Convert.ToBase64String(passUserHash);
